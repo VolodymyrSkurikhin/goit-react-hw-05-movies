@@ -1,0 +1,39 @@
+.title{
+  font-size: 34px;
+  font-family:cursive;
+  padding-right: 15px;
+}
+.release_date{
+  padding-left: 15px;
+}
+.sectionText{
+  font-size: 18px;
+}
+.sectionTitle{
+  font-size: 15px;
+}
+.detailContainer{
+  display: flex;
+}
+
+.link {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px;
+  font-weight: 500;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 18px;
+  color: dimgrey;
+}
+
+.link.active {
+  color: brown;
+}
+/* .addInfoUl{
+  display: flex;
+  flex-direction: column;
+} */
+/* .addInfo{
+  text-align: ;
+} */
