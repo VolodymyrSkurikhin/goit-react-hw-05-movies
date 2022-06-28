@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Navigation from './Navigation/Navigation';
 import Home from './Pages/Home/Home';
 import MovieDetails from './Pages/MovieDetails/MovieDetails';
@@ -19,26 +19,12 @@ export const App = () => {
       }}
     >
       <Navigation />
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/movies">
-          <Movies />
-        </Route>
-        <Route path="/movies/:movieId">
-          <MovieDetails />
-          <Route path="cast">
-            <Cast />
-          </Route>
-          <Route path="reviews">
-            <Reviews />
-          </Route>
-        </Route>
-        <Route>
-          <Home />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/movies/:movieId/*" element={<MovieDetails />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/" element={<Home />} />
+        <Route element={<Home />} />
+      </Routes>
     </div>
   );
 };

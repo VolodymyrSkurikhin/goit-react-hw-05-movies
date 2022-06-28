@@ -1,3 +1,10 @@
+.detailContainer {
+  padding: 10px;
+}
+.leftContainer,
+.rightContainer {
+  padding: 10px;
+}
 .title{
   font-size: 34px;
   font-family:cursive;
@@ -27,13 +34,13 @@
   color: dimgrey;
 }
 
-.link.active {
+.active {
+  display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    padding: 12px;
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
   color: brown;
 }
-/* .addInfoUl{
-  display: flex;
-  flex-direction: column;
-} */
-/* .addInfo{
-  text-align: ;
-} */

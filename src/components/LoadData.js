@@ -23,5 +23,22 @@ export function fetchOnSearch(searchWord) {
   console.log(result);
   return result;
 }
+export function fetchCast(Id) {
+  const result = LoadData(
+    `${BASE_URL}/movie/${Id}/credits?${API_KEY}&language=en-US`
+  );
+  console.log(result);
+  return result;
+}
+export function fetchReviews(Id) {
+  const result = LoadData(
+    `${BASE_URL}/movie/${Id}/reviews?${API_KEY}&language=en-US&page=1`
+  );
+  console.log(result);
+  return result;
+}
+
+// https://api.themoviedb.org/3/movie/{movie_id}/reviews?api_key=<<api_key>>&language=en-US&page=1
+// https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=<<api_key>>&language=en-US
 // https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false
 // https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US

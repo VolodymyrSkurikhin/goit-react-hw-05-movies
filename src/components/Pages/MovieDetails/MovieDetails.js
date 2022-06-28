@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, NavLink, Outlet } from 'react-router-dom';
+import {
+  Route,
+  useParams,
+  NavLink,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
 import * as LoadData from '../../../components/LoadData';
+import Cast from '../../Cast/Cast';
+import Reviews from '../../Reviews/Reviews';
 import s from './MovieDetails.module.css';
 
 export default function MovieDetails() {
+  const location = useLocation();
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
-  // console.log(movie);
   useEffect(() => {
     LoadData.fetchMovieDetails(movieId).then(res => setMovie(res));
   }, [movieId]);
   function takeGenres(entries) {
-    return entries.map(entry => entry.name);
+    return entries.map(entry => entry.name).join(', ');
   }
-  movie && console.log(movie.poster_path);
   return (
     movie && (
       <>
-        <button type="button">Go back</button>
+        <NavLink to={location.state?.from ?? '/movies'}>
+          <button type="button">Go back</button>
+        </NavLink>
         <div className={s.detailContainer}>
           <div className={s.leftContainer}>
             <img
-              href={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt="Movie poster"
               className={s.poster}
             />
@@ -46,18 +55,30 @@ export default function MovieDetails() {
         <h2 className={s.sectionTitle}>Additional Information</h2>
         <ul className={s.addInfoUl}>
           <li className={s.addInfo}>
-            <NavLink to="cast" className={s.link} activeClassName={s.active}>
+            <NavLink
+              to="cast"
+              state={{ from: location.state.from }}
+              className={({ isActive }) => (isActive ? s.active : s.link)}
+            >
               Cast
             </NavLink>
           </li>
           <li className={s.addInfo}>
-            <NavLink to="reviews" className={s.link} activeClassName={s.active}>
+            <NavLink
+              to="reviews"
+              state={{ from: location.state.from }}
+              className={({ isActive }) => (isActive ? s.active : s.link)}
+            >
               Reviews
             </NavLink>
           </li>
         </ul>
         <hr />
-        <Outlet />
+        {/* <Outlet/> */}
+        <Routes>
+          <Route path="cast" element={<Cast movieId={movieId} />} />
+          <Route path="reviews" element={<Reviews movieId={movieId} />} />
+        </Routes>
       </>
     )
   );
