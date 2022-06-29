@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import * as LoadData from '../LoadData';
 import s from './Reviews.module.css';
+import PropTypes from 'prop-types';
 
 export default function Reviews({ movieId }) {
   const [reviews, setReviews] = useState(null);
@@ -25,3 +26,7 @@ export default function Reviews({ movieId }) {
     )
   );
 }
+
+Reviews.propTypes = {
+  movieId: PropTypes.string,
+};

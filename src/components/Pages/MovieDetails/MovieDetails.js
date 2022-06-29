@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import {
   Route,
   useParams,
@@ -7,9 +7,16 @@ import {
   useLocation,
 } from 'react-router-dom';
 import * as LoadData from '../../../components/LoadData';
-import Cast from '../../Cast/Cast';
-import Reviews from '../../Reviews/Reviews';
+// import Cast from '../../Cast/Cast';
+// import Reviews from '../../Reviews/Reviews';
 import s from './MovieDetails.module.css';
+
+const Cast = lazy(() =>
+  import('../../Cast/Cast' /* webpackChunkname: "Cast" */)
+);
+const Reviews = lazy(() =>
+  import('../../Reviews/Reviews' /* webpackChunkname: "Reviews" */)
+);
 
 export default function MovieDetails() {
   const location = useLocation();
@@ -74,11 +81,12 @@ export default function MovieDetails() {
           </li>
         </ul>
         <hr />
-        {/* <Outlet/> */}
-        <Routes>
-          <Route path="cast" element={<Cast movieId={movieId} />} />
-          <Route path="reviews" element={<Reviews movieId={movieId} />} />
-        </Routes>
+        <Suspense fallback={<h3>Loading...</h3>}>
+          <Routes>
+            <Route path="cast" element={<Cast movieId={movieId} />} />
+            <Route path="reviews" element={<Reviews movieId={movieId} />} />
+          </Routes>
+        </Suspense>
       </>
     )
   );
