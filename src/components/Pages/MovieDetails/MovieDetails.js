@@ -23,9 +23,17 @@ export default function MovieDetails() {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
   useEffect(() => {
-    LoadData.fetchMovieDetails(movieId).then(res => setMovie(res));
+    LoadData.fetchMovieDetails(movieId)
+      .then(res => setMovie(res))
+      .catch(() => setMovie(''));
   }, [movieId]);
   function takeGenres(entries) {
+    if (!entries) {
+      return 'no info';
+    }
+    if (entries.length === 0) {
+      return 'No info';
+    }
     return entries.map(entry => entry.name).join(', ');
   }
   return (
@@ -33,27 +41,39 @@ export default function MovieDetails() {
       <>
         <NavLink to={location.state?.from ?? '/movies'}>
           <button type="button">Go back</button>
-        </NavLink>
+        </NavLink>{' '}
         <div className={s.detailContainer}>
           <div className={s.leftContainer}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt="Movie poster"
-              className={s.poster}
-            />
+            {movie.poster_path ? (
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt="Movie poster"
+                className={s.poster}
+              />
+            ) : (
+              <h3>No poster</h3>
+            )}
           </div>
           <div className={s.rightContainer}>
             <h1 className={s.title}>
-              {movie.original_title}
-              <span className={s.release_date}>
-                {movie.release_date.slice(0, 4)}
-              </span>
+              {movie.original_title ? movie.original_title : ''}
+              {movie.release_date && (
+                <span className={s.release_date}>
+                  {`(${movie.release_date.slice(0, 4)})`}
+                </span>
+              )}
             </h1>
             <p className={s.sectionText}>
-              {`User score: ${(movie.vote_average * 10).toFixed()} %`}
+              {movie.vote_average
+                ? `User score: ${(movie.vote_average * 10).toFixed()} %`
+                : 'No data'}
             </p>
             <h2 className={s.sectionTitle}>Overview</h2>
-            <p className={s.sectionText}>{movie.overview}</p>
+            {movie.overview && movie.overview.length !== 0 ? (
+              <p className={s.sectionText}>{movie.overview}</p>
+            ) : (
+              <p className={s.sectionText}>No info</p>
+            )}
             <h2 className={s.sectionTitle}>Genres</h2>
             <p className={s.sectionText}>{takeGenres(movie.genres)}</p>
           </div>

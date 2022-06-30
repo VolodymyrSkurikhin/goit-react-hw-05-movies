@@ -14,7 +14,9 @@ export default function Movies() {
       return;
     }
 
-    LoadData.fetchOnSearch(currentSearch).then(res => setMovies(res.results));
+    LoadData.fetchOnSearch(currentSearch)
+      .then(res => setMovies(res.results))
+      .catch(() => setMovies(''));
   }, [currentSearch]);
   function onButtonSubmit(e) {
     e.preventDefault();
@@ -46,7 +48,11 @@ export default function Movies() {
           Search
         </button>
       </form>
-      {movies && <MovieList moviesData={movies} />}
+      {movies && movies.length === 0 ? (
+        <h3>{`We don't have ${currentSearch} movie, sorry...`}</h3>
+      ) : (
+        movies && <MovieList moviesData={movies} />
+      )}
     </>
   );
 }

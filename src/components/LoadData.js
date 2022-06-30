@@ -1,4 +1,4 @@
-const BASE_URL = `https://api.themoviedb.org/4`;
+const BASE_URL = `https://api.themoviedb.org/3`;
 const API_KEY = `api_key=a96c6afcb6324213a620b6851c83fc98`;
 async function LoadData(url) {
   const response = await fetch(url);
