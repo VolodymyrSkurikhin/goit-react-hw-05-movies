@@ -1,4 +1,4 @@
-const BASE_URL = `https://api.themoviedb.org/3`;
+const BASE_URL = `https://api.themoviedb.org/4`;
 const API_KEY = `api_key=a96c6afcb6324213a620b6851c83fc98`;
 async function LoadData(url) {
   const response = await fetch(url);
@@ -18,7 +18,7 @@ export function fetchMovieDetails(Id) {
 }
 export function fetchOnSearch(searchWord) {
   const result = LoadData(
-    `${BASE_URL}/search/movie/?query=${searchWord}&${API_KEY}&language=en-US&page=1&include_adult=false`
+    `${BASE_URL}/search/movie?query=${searchWord}&${API_KEY}&language=en-US&page=1&include_adult=false`
   );
   console.log(result);
   return result;
